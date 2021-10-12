@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { log } from 'console';
 import { AirtelService } from 'src/airtel/airtel.service';
 import { AirtelRequestDto } from 'src/dto/AirtelRequestDto';
+import { AirtelResponseDto } from 'src/dto/AirtelResponseDto';
 import { MtnRequestDto } from 'src/dto/MtnRequestDto';
 import { PaymentDto } from 'src/dto/PaymentDto';
 import { ZamtelRequestDto } from 'src/dto/ZamtelRequestDto';
@@ -53,7 +54,19 @@ export class PayService {
                 amount: payload.amount,
                 id: payload.reference
             }
-            const mno_response = this.airtelService.requestPayment(request_payload)
+            const mno_response = await this.airtelService.requestPayment(request_payload)
+            if(mno_response.status.code == 200 ){
+                return {
+                    "response_code": mno_response.status.code,
+                    "message": mno_response.status.message
+                }
+            } else {
+                return {
+                    "response_code": mno_response.status.code,
+                    "message": mno_response.status.message
+                }
+            }
+
         } else if (number_prefix == "6"){
             const provider = "mtn"
             const user_id = payload.user_id

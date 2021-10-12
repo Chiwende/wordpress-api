@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AirtelRequestDto } from 'src/dto/AirtelRequestDto';
+import { AirtelResponseDto } from 'src/dto/AirtelResponseDto';
 import { AirtelAuthenticationDto } from 'src/dto/AirtelTokenPayload';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class AirtelService {
           });
     }
 
-    async requestPayment(payload: AirtelRequestDto) {
+    async requestPayment(payload: AirtelRequestDto): Promise<AirtelResponseDto> {
         const reference = "KH" +"" +Date.now()
         const access_token = await this.generateToken(payload);
         console.log(' airtel access token',access_token)
@@ -40,6 +41,8 @@ export class AirtelService {
           },
         };
     
+        console.log("sending payload below", openapi_request)
+
         const config = {
           method: 'post',
           url: 'https://openapiuat.airtel.africa/merchant/v1/payments/',
@@ -61,6 +64,8 @@ export class AirtelService {
             console.log(res.data);
             return res.data;
           });
+
+          return request
       }
       
 
