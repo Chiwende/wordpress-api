@@ -32,7 +32,7 @@ export class PayService {
         private readonly zamtelService: ZamtelService
     ) {}
 
-    async makePaymentRequest(payload: PaymentDto){
+    async makePaymentRequest(payload: PaymentDto, response){
         payload.transaction_id = "KH"+ "-" + Date.now()
         
         this.writeTransaction(payload)

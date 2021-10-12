@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { PaymentDto } from 'src/dto/PaymentDto';
 import { PayService } from './pay.service';
 
@@ -8,8 +8,9 @@ export class PayController {
         private readonly payService: PayService
     ) {}
     @Post()
-    makePaymentrequest(@Body() payload: PaymentDto){
-        return this.payService.makePaymentRequest(payload)
+    makePaymentrequest(@Body() payload: PaymentDto, @Res() response: Response){
+        console.log()
+        return this.payService.makePaymentRequest(payload, response)
     }
 
     @Get("transactions")
