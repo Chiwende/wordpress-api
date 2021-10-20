@@ -9,7 +9,7 @@ export class PayController {
     ) {}
     @Post()
     makePaymentrequest(@Body() payload: PaymentDto, @Res() response: any){
-        console.log()
+        console.log(payload)
         return this.payService.makePaymentRequest(payload, response)
     }
 
