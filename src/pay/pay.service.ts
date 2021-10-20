@@ -100,19 +100,29 @@ export class PayService {
                 conversationI_id: reference,
                 msisdn: payload.msisdn
             }
-            const mno_response = this.zamtelService.collectionRequest(request_payload)
+            const mno_response = await this.zamtelService.collectionRequest(request_payload)
+            console.log(mno_response)
+            console.log('response code ??', mno_response.status)
             if(mno_response['response_code'] == 200){
                const update_transaction_payload = {
                    "status": 200,
                    "transaction_id": reference
                } 
                this.updateTransaction(update_transaction_payload)
+               return {
+                   response_code: mno_response.status,
+                   message: mno_response.message
+               }
             } else {
                 const update_transaction_payload = {
                     "status": 500,
                     "transaction_id": reference
                 } 
                 this.updateTransaction(update_transaction_payload)
+                return {
+                    response_code: mno_response.status,
+                    message: mno_response.message
+                }
             }
 
         }

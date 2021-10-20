@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import {  Injectable } from '@nestjs/common';
 import { ZamtelRequestDto } from 'src/dto/ZamtelRequestDto';
+import { ZamtelResponseDto } from 'src/dto/ZamtelResponseDto';
 
 @Injectable()
 export class ZamtelService {
@@ -8,7 +9,7 @@ export class ZamtelService {
         private readonly httpService: HttpService
     ) {}
 
-    async collectionRequest(payload: ZamtelRequestDto) {
+    async collectionRequest(payload: ZamtelRequestDto):Promise<ZamtelResponseDto> {
         const url =
           'https://apps.zamtel.co.zm/ZampayRest/Req?&ThirdPartyID=' +
           payload.third_party_id +
