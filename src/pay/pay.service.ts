@@ -132,7 +132,7 @@ export class PayService {
                } 
                this.updateTransaction(update_transaction_payload)
                return {
-                   response_code: mno_response.status,
+                   response_code: "200",
                    message: mno_response.message
                }
             } else {
