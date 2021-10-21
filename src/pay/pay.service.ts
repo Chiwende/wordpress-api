@@ -96,7 +96,7 @@ export class PayService {
                 third_party_id: api_creds[0].third_party_id,
                 password: api_creds[0].password,
                 amount: payload.amount,
-                shortcode: api_creds[0].shortcode,
+                shortCode: api_creds[0].shortcode,
                 conversationI_id: reference,
                 msisdn: payload.msisdn
             }

@@ -20,7 +20,7 @@ export class ZamtelService {
           '&Msisdn=' +
           payload.msisdn +
           '&Shortcode=' +
-          payload.shortcode +
+          payload.shortCode +
           '&ConversationId=' +
           payload.conversationI_id;
           console.log(url)
