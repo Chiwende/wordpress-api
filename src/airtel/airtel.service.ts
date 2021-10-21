@@ -11,7 +11,7 @@ export class AirtelService {
     ) {}
     async generateToken(payload: AirtelAuthenticationDto){
         console.log("Generate  token payload", payload)
-        const url = 'https://openapiuat.airtel.africa/auth/oauth2/token';
+        const url = 'https://openapi.airtel.africa/auth/oauth2/token';
         return await this.httpService
           .post(url, payload)
           .toPromise()
@@ -45,7 +45,7 @@ export class AirtelService {
 
         const config = {
           method: 'post',
-          url: 'https://openapiuat.airtel.africa/merchant/v1/payments/',
+          url: 'https://openapi.airtel.africa/merchant/v1/payments/',
           headers: {
             Accept: '*/*',
             Authorization: 'Bearer ' + access_token,
@@ -89,7 +89,7 @@ export class AirtelService {
     
         const config = {
           method: 'post',
-          url: 'https://openapiuat.airtel.africa/merchant/v1/payments/',
+          url: 'https://openapi.airtel.africa/merchant/v1/payments/',
           headers: {
             Accept: '*/*',
             Authorization: 'Bearer ' + access_token,
