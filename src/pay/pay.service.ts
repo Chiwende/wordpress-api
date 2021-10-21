@@ -32,7 +32,7 @@ export class PayService {
         private readonly zamtelService: ZamtelService
     ) {}
 
-    async makePaymentRequest(payload: PaymentDto, response){
+    async makePaymentRequest(payload: PaymentDto){
         payload.transaction_id = "KH"+ "-" + Date.now()
         
         this.writeTransaction(payload)
@@ -84,7 +84,29 @@ export class PayService {
                 externalId: payload.reference,
                 target_environment: "sandbox"
             }
-            const mno_response = this.mtnService.sendPaymentRequest(request_payload)
+            const mno_response = await this.mtnService.sendPaymentRequest(request_payload)
+            console.log(mno_response)
+            if(mno_response == 202){
+                const update_transaction_payload = {
+                    "status": 200,
+                    "message": "Success"
+                } 
+                this.updateTransaction(update_transaction_payload)
+                return {
+                    response_code: 200,
+                    message: "Transaction accepted for processing"
+                }
+            } else {
+                const update_transaction_payload = {
+                    "status": mno_response,
+                    "message": "Failed"
+                } 
+                this.updateTransaction(update_transaction_payload)
+                return {
+                    response_code: mno_response,
+                    message: "Transaction Failed"
+                }
+            }
 
         } else if(number_prefix == "5"){
             const reference = "KH"+ "-" + Date.now()
@@ -103,10 +125,10 @@ export class PayService {
             const mno_response = await this.zamtelService.collectionRequest(request_payload)
             console.log(mno_response)
             console.log('response code ??', mno_response.status)
-            if(mno_response['response_code'] == 200){
+            if(mno_response.status == '0'){
                const update_transaction_payload = {
                    "status": 200,
-                   "transaction_id": reference
+                   "message": mno_response.message
                } 
                this.updateTransaction(update_transaction_payload)
                return {
@@ -116,14 +138,17 @@ export class PayService {
             } else {
                 const update_transaction_payload = {
                     "status": 500,
-                    "transaction_id": reference
+                    "message": mno_response.message
                 } 
-                this.updateTransaction(update_transaction_payload)
-                return {
+                const update = this.updateTransaction(update_transaction_payload)
+                const response = {
                     response_code: mno_response.status,
                     message: mno_response.message
                 }
+
+                return response
             }
+    
 
         }
 

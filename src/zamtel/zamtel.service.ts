@@ -1,5 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import {  Injectable } from '@nestjs/common';
+import { response } from 'express';
 import { ZamtelRequestDto } from 'src/dto/ZamtelRequestDto';
 import { ZamtelResponseDto } from 'src/dto/ZamtelResponseDto';
 
@@ -24,7 +25,7 @@ export class ZamtelService {
           '&ConversationId=' +
           payload.conversationI_id;
           console.log(url)
-        return await this.httpService
+        const response_data = await this.httpService
           .get(url)
           .toPromise()
           .then((res) => {
@@ -37,6 +38,8 @@ export class ZamtelService {
             }
             return res.data
           });
+
+          return response_data
       }
     
 }
