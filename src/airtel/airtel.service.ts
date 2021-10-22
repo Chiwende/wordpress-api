@@ -25,6 +25,7 @@ export class AirtelService {
     }
 
     async transactionsEnquiry(payload: AirtelRequestDto): Promise<AirtelTransactionEnquiryResponseDto>{
+      console.log("<===== check status =====>")
       const access_token = await this.generateToken(payload);
       const config = {
         method: 'post',
@@ -48,7 +49,7 @@ export class AirtelService {
       )
 
       while(request.data.transaction.status == 'TIP'){
-        console.log(request.data.transaction.status)
+        console.log('status ====>' + request.data.transaction.status)
         request = await this.httpService.get(config.url)
       }
 
