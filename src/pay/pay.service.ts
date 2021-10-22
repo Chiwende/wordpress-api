@@ -55,7 +55,7 @@ export class PayService {
                 id: payload.reference
             }
             const mno_response = await this.airtelService.requestPayment(request_payload)
-            if(mno_response.status.code == 200 ){
+            if(mno_response.data.transaction.status == 'TS' ){
                 return {
                     "response_code": mno_response.status.code,
                     "message": mno_response.status.message

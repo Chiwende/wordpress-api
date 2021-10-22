@@ -1,15 +1,17 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { response } from 'express';
 import { AirtelRequestDto } from 'src/dto/AirtelRequestDto';
 import { AirtelResponseDto } from 'src/dto/AirtelResponseDto';
 import { AirtelAuthenticationDto } from 'src/dto/AirtelTokenPayload';
+import { AirtelTransactionEnquiryResponseDto } from 'src/dto/AirtelTransactionEnquiryDto';
 
 @Injectable()
 export class AirtelService {
     constructor (
         private readonly httpService: HttpService
     ) {}
-    async generateToken(payload: AirtelAuthenticationDto){
+    async generateToken(payload: AirtelAuthenticationDto):Promise<AirtelResponseDto>{
         console.log("Generate  token payload", payload)
         const url = 'https://openapi.airtel.africa/auth/oauth2/token';
         return await this.httpService
@@ -22,7 +24,40 @@ export class AirtelService {
           });
     }
 
-    async requestPayment(payload: AirtelRequestDto): Promise<AirtelResponseDto> {
+    async transactionsEnquiry(payload: AirtelRequestDto): Promise<AirtelTransactionEnquiryResponseDto>{
+      const access_token = await this.generateToken(payload);
+      const config = {
+        method: 'post',
+        url: ' https://openapi.airtel.africa/standard/v1/payments/' + payload.id,
+        headers: {
+          Accept: '*/*',
+          Authorization: 'Bearer ' + access_token,
+          'Content-Type': 'application/json',
+          'X-Country': payload.country,
+          'X-Currency': payload.currency,
+        },
+      };
+
+      let request = await this.httpService.get(config.url)
+      .toPromise()
+      .then(
+        (res) => {
+          console.log(res.data)
+          return res.data
+        }
+      )
+
+      while(request.data.transaction.status == 'TIP'){
+        console.log(request.data.transaction.status)
+        request = await this.httpService.get(config.url)
+      }
+
+      return request
+    }
+
+
+
+    async requestPayment(payload: AirtelRequestDto): Promise<AirtelTransactionEnquiryResponseDto> {
         const reference = "KH" +"" +Date.now()
         const access_token = await this.generateToken(payload);
         console.log(' airtel access token',access_token)
@@ -37,7 +72,7 @@ export class AirtelService {
             amount: payload.amount,
             country: payload.country,
             currency: payload.currency,
-            id: reference,
+            id: payload.id,
           },
         };
     
@@ -65,7 +100,9 @@ export class AirtelService {
             return res.data;
           });
 
-          return request
+          const check_status = await this.transactionsEnquiry(payload)
+
+          return check_status
       }
       
 
