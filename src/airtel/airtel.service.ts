@@ -47,14 +47,25 @@ export class AirtelService {
       .toPromise()
       .then(
         (res) => {
-          console.log(res)
+          // console.log(res)
           return res.data
         }
       )
       this.request_status = request.data.transaction.status
       while(this.request_status == 'TIP'){
         console.log('status ====>' + request.data.transaction.status)
-        this.request_status = await this.httpService.get(config.url,{headers: config.headers}) 
+        const result = await this.httpService.get(config.url,{headers: config.headers})
+          .toPromise()
+          .then(
+            (res) => {
+              console.log()
+              return res.data
+            }
+          ).catch((error) => {
+            console.log('Error getting transaction details =====> ' + error)
+          })
+        
+          this.request_status = result.data.transaction.status
       }
 
       return request
