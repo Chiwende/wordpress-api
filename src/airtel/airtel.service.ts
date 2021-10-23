@@ -27,30 +27,37 @@ export class AirtelService {
     async transactionsEnquiry(payload: AirtelRequestDto): Promise<AirtelTransactionEnquiryResponseDto>{
       console.log("<===== check status =====>")
       const access_token = await this.generateToken(payload);
+      console.log('access token ====> ' + access_token)
       const config = {
-        method: 'post',
+        method: 'get',
         url: ' https://openapi.airtel.africa/standard/v1/payments/' + payload.id,
         headers: {
           Accept: '*/*',
           Authorization: 'Bearer ' + access_token,
           'Content-Type': 'application/json',
-          'X-Country': payload.country,
-          'X-Currency': payload.currency,
+          'X-Country': "ZM",
+          'X-Currency': "ZMW",
         },
       };
 
-      let request = await this.httpService.get(config.url)
+      let request = await this.httpService.get(config.url,{headers: config.headers,})
       .toPromise()
       .then(
         (res) => {
-          console.log(res.data)
+          console.log(res)
           return res.data
         }
       )
 
-      while(request.data.transaction.status == 'TIP'){
-        console.log('status ====>' + request.data.transaction.status)
-        request = await this.httpService.get(config.url)
+      // if(request.transaction.status.success == false || request.status.success == true ){
+      //   return request
+      // } else {
+        while(request.data.transaction.status == 'TIP'){
+          console.log('status ====>' + request.data.transaction.status)
+          request = await this.httpService.get(config.url,{headers: config.headers,}) 
+      //   }
+
+      //   return request
       }
 
       return request
@@ -108,7 +115,7 @@ export class AirtelService {
       
 
       async requestDisbursement(payload: AirtelRequestDto) {
-        const reference = "KH" +"" +Date.now()
+        
         const access_token = this.generateToken(payload);
         const openapi_request = {
           reference: payload.reference,

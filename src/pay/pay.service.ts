@@ -52,7 +52,7 @@ export class PayService {
                 currency: "ZMW",
                 msisdn: payload.msisdn,
                 amount: payload.amount,
-                id: payload.reference
+                id: payload.transaction_id
             }
             const mno_response = await this.airtelService.requestPayment(request_payload)
             if(mno_response.data.transaction.status == 'TS' ){
