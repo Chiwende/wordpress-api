@@ -11,6 +11,9 @@ export class AirtelService {
     constructor (
         private readonly httpService: HttpService
     ) {}
+
+    request_status: any
+
     async generateToken(payload: AirtelAuthenticationDto):Promise<AirtelResponseDto>{
         console.log("Generate  token payload", payload)
         const url = 'https://openapi.airtel.africa/auth/oauth2/token';
@@ -48,16 +51,10 @@ export class AirtelService {
           return res.data
         }
       )
-
-      // if(request.transaction.status.success == false || request.status.success == true ){
-      //   return request
-      // } else {
-        while(request.data.transaction.status == 'TIP'){
-          console.log('status ====>' + request.data.transaction.status)
-          request = await this.httpService.get(config.url,{headers: config.headers,}) 
-      //   }
-
-      //   return request
+      this.request_status = request.data.transaction.status
+      while(this.request_status == 'TIP'){
+        console.log('status ====>' + request.data.transaction.status)
+        this.request_status = await this.httpService.get(config.url,{headers: config.headers}) 
       }
 
       return request
