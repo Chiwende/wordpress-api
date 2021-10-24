@@ -50,8 +50,12 @@ export class AirtelService {
           // console.log(res)
           return res.data
         }
-      ).catch()
-      
+      ).catch(
+        (error) => {
+          console.log(error)
+        }
+      )
+
       this.request_status = request.data.transaction.status
       while(this.request_status == 'TIP'){
         console.log(Date.now() + ' | status ====>' + request.data.transaction.status)
