@@ -56,9 +56,13 @@ export class AirtelService {
         }
       )
 
+      var date = new Date();
+      let timestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+      date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())
+
       this.request_status = request.data.transaction.status
       while(this.request_status == 'TIP'){
-        console.log(Date.UTC + ' | status ====>' + request.data.transaction.status)
+        console.log(timestamp + ' | status ====>' + request.data.transaction.status)
         const result = await this.httpService.get(config.url,{headers: config.headers})
           .toPromise()
           .then(
