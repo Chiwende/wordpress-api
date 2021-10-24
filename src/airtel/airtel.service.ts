@@ -67,7 +67,7 @@ export class AirtelService {
           .toPromise()
           .then(
             (res) => {
-              console.log()
+              console.log('Transaction enquiry response ',res.data)
               return res.data
             }
           ).catch((error) => {
@@ -76,7 +76,7 @@ export class AirtelService {
         
           this.request_status = result.data.transaction.status
       }
-
+      console.log('data been returned' + request)
       return request
     }
 
