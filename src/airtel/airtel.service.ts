@@ -58,7 +58,7 @@ export class AirtelService {
 
       this.request_status = request.data.transaction.status
       while(this.request_status == 'TIP'){
-        console.log(Date.now() + ' | status ====>' + request.data.transaction.status)
+        console.log(Date.UTC + ' | status ====>' + request.data.transaction.status)
         const result = await this.httpService.get(config.url,{headers: config.headers})
           .toPromise()
           .then(
