@@ -50,10 +50,11 @@ export class AirtelService {
           // console.log(res)
           return res.data
         }
-      )
+      ).catch()
+      
       this.request_status = request.data.transaction.status
       while(this.request_status == 'TIP'){
-        console.log('status ====>' + request.data.transaction.status)
+        console.log(Date.now() + ' | status ====>' + request.data.transaction.status)
         const result = await this.httpService.get(config.url,{headers: config.headers})
           .toPromise()
           .then(
@@ -117,6 +118,7 @@ export class AirtelService {
           });
 
           const check_status = await this.transactionsEnquiry(payload)
+          console.log('check status response')
 
           return check_status
       }
