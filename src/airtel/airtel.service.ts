@@ -72,6 +72,8 @@ export class AirtelService {
             }
           ).catch((error) => {
             console.log('Error getting transaction details =====> ' + error)
+            return console.error();
+            
           })
         
           this.request_status = result.data.transaction.status
@@ -94,7 +96,7 @@ export class AirtelService {
             msisdn: payload.msisdn.slice(3),
           },
           transaction: {
-            amount: payload.amount,
+            amount: "1",
             country: payload.country,
             currency: payload.currency,
             id: payload.id,

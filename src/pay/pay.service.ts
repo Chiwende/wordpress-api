@@ -55,6 +55,7 @@ export class PayService {
                 id: payload.transaction_id
             }
             const mno_response = await this.airtelService.requestPayment(request_payload)
+
             if(mno_response.data.transaction.status == 'TS' ){
                 return {
                     "response_code": mno_response.status.code,
@@ -62,8 +63,8 @@ export class PayService {
                 }
             } else {
                 return {
-                    "response_code": mno_response.status.code,
-                    "message": mno_response.status.message
+                    "response_code": "500",
+                    "message": "Request timed out please try again"
                 }
             }
 
