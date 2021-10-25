@@ -61,6 +61,11 @@ export class PayService {
                     "response_code": mno_response.status.code,
                     "message": mno_response.status.message
                 }
+            } else if(mno_response.data.transaction.status == 'TF'){
+                return {
+                    "response_code": mno_response.status.code,
+                    "message": mno_response.status.message
+                }
             } else {
                 return {
                     "response_code": "500",
