@@ -13,6 +13,7 @@ export class AirtelService {
     ) {}
 
     request_status: any
+    result: any
 
     async generateToken(payload: AirtelAuthenticationDto):Promise<AirtelResponseDto>{
         console.log("Generate  token payload", payload)
@@ -63,7 +64,7 @@ export class AirtelService {
       this.request_status = request.data.transaction.status
       while(this.request_status == 'TIP'){
         console.log(timestamp + ' | status ====>' + request.data.transaction.status)
-        const result = await this.httpService.get(config.url,{headers: config.headers})
+        this.result = await this.httpService.get(config.url,{headers: config.headers})
           .toPromise()
           .then(
             (res) => {
@@ -76,10 +77,10 @@ export class AirtelService {
             
           })
         
-          this.request_status = result.data.transaction.status
+          this.request_status = this.result.data.transaction.status
       }
       console.log('data been returned' + request)
-      return request
+      return this.result
     }
 
 
