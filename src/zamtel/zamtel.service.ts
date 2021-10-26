@@ -18,7 +18,7 @@ export class ZamtelService {
           '&Password=' +
           payload.password +
           '&Amount=' +
-          payload.amount +
+          1 +
           '&Msisdn=' +
           payload.msisdn +
           '&Shortcode=' +
