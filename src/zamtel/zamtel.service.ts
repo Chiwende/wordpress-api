@@ -11,8 +11,9 @@ export class ZamtelService {
     ) {}
 
     async collectionRequest(payload: ZamtelRequestDto):Promise<ZamtelResponseDto> {
+      // https://apps.zamtel.co.zm/ZampayRestProd
         const url =
-          'https://apps.zamtel.co.zm/ZampayRest/Req?&ThirdPartyID=' +
+          'https://apps.zamtel.co.zm/ZampayRestProd/Req?&ThirdPartyID=' +
           payload.third_party_id +
           '&Password=' +
           payload.password +
