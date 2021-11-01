@@ -51,18 +51,20 @@ export class MtnService {
           'Authorization': 'Bearer '+ access_token,
           'Content-Type': 'application/json',
           'X-Target-Environment': "mtnzambia",
-          'X-Reference-Id': x_ref,
         }
     };
 
       const status = await this.httpService.get(config.url, { headers: config.headers})
       .toPromise()
       .then(res => {
+          
           // console.log(res.headers)
-          console.log(" trasaction enquiry response status ==> ",res.status)
+          console.log(" trasaction enquiry response status ==> ",res.data)
+          console.log(" trasaction enquiry response status ==> ",res.data.status)
           const response = res.data
           return response
       })
+      return status
     }    
 
     async sendPaymentRequest(payload: MtnRequestDto){
