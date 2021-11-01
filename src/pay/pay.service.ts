@@ -84,7 +84,7 @@ export class PayService {
                 user_id: api_creds[0].mtn_user_id,
                 user_key: api_creds[0].mtn_key,
                 amount: "1",
-                currency: "ZMW ",
+                currency: "ZMW",
                 partyId: payload.msisdn,
                 payer_message: payload.reference,
                 payer_note: payload.reference,
