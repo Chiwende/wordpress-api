@@ -10,6 +10,9 @@ export class MtnService {
         private readonly httpService: HttpService
     ) {}
 
+    transaction_status: any
+    transction_result: any
+
     async generateToken(payload: MtnAuthenticationDto){
         console.log("authentication payload recieved ====> ", payload)
         const encoded_creds = Buffer.from(payload.user_id + ":" + payload.user_key).toString('base64');
@@ -38,6 +41,29 @@ export class MtnService {
         return access
     }
 
+    async transctionEnquiry(x_ref: string, access_token: string, sub_key: string){
+      const config = {
+        method: 'get',
+        url: 'https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay',
+        headers: {
+          'Ocp-Apim-Subscription-Key': sub_key,
+          'Authorization': 'Bearer '+ access_token,
+          'Content-Type': 'application/json',
+          'X-Target-Environment': "mtnzambia",
+          'X-Reference-Id': x_ref,
+        }
+    };
+
+      const status = await this.httpService.get(config.url, { headers: config.headers})
+      .toPromise()
+      .then(res => {
+          // console.log(res.headers)
+          console.log("response status ==> ",res.status)
+          const response = res.data
+          return response
+      })
+    }    
+
     async sendPaymentRequest(payload: MtnRequestDto){
         const access_token = await this.generateToken(payload)
         console.log("*access token", access_token)
@@ -59,7 +85,7 @@ export class MtnService {
             method: 'post',
             url: 'https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay',
             headers: {
-              'Ocp-Apim-Subscription-Key': payload.ocp_apim_subscription_key    ,
+              'Ocp-Apim-Subscription-Key': payload.ocp_apim_subscription_key,
               'Authorization': 'Bearer '+ access_token,
               'Content-Type': 'application/json',
               'X-Target-Environment': "mtnzambia",
@@ -69,9 +95,11 @@ export class MtnService {
 
         console.log(config.headers)
         console.log(momoPayload)
+
+
         
 
-        const access = await this.httpService.post(config.url, momoPayload, { headers: config.headers})
+        const payment_request = await this.httpService.post(config.url, momoPayload, { headers: config.headers})
         .toPromise()
         .then(res => {
             // console.log(res.headers)
@@ -79,7 +107,13 @@ export class MtnService {
             const response = res.data
             return res.status
         })
-        return access
+
+        this.transaction_status = this.transctionEnquiry(x_ref, access_token,payload.ocp_apim_subscription_key);
+        while(this.transaction_status.status == "PENDING"){
+          console.log('TRANSACTION STATUS ===> ', this.transaction_status.status)
+          this.transaction_status = this.transctionEnquiry(x_ref, access_token,payload.ocp_apim_subscription_key);
+        }
+        return this.transaction_status.status
 
     }
     async disbursementRequest(payload: MtnRequestDto){

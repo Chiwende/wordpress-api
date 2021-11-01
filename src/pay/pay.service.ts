@@ -32,6 +32,10 @@ export class PayService {
         private readonly zamtelService: ZamtelService
     ) {}
 
+    async transactionEnquiry(x_ref: string, access_token: string){
+
+    }
+
     async makePaymentRequest(payload: PaymentDto){
         payload.transaction_id = "KH"+ "-" + Date.now()
         
@@ -93,7 +97,7 @@ export class PayService {
             }
             const mno_response = await this.mtnService.sendPaymentRequest(request_payload)
             console.log(mno_response)
-            if(mno_response == 202){
+            if(mno_response == "SUCCESSFUL"){
                 const update_transaction_payload = {
                     "status": 200,
                     "message": "Success"
