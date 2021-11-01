@@ -16,14 +16,14 @@ export class MtnService {
         // console.log("encoded headers",encoded_creds)
         const config = {
             method: 'post',
-            url: 'https://sandbox.momodeveloper.mtn.com/collection/token/',
+            url: 'https://proxy.momoapi.mtn.com/collection/token/',
             headers: {
               'Ocp-Apim-Subscription-Key': payload.ocp_apim_subscription_key    ,
               'Authorization': 'Basic '+ encoded_creds
             }
           };
         //   console.log("Headers been sent", config.headers)
-          const url = "https://sandbox.momodeveloper.mtn.com/collection/token/"
+          const url = "https://proxy.momoapi.mtn.com/collection/token/"
           const data = ""
 
         const access = await this.httpService.post(url, data, { headers: config.headers})
@@ -57,12 +57,12 @@ export class MtnService {
 
         const config = {
             method: 'post',
-            url: 'https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay',
+            url: 'https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay',
             headers: {
               'Ocp-Apim-Subscription-Key': payload.ocp_apim_subscription_key    ,
               'Authorization': 'Bearer '+ access_token,
               'Content-Type': 'application/json',
-              'X-Target-Environment': payload.target_environment,
+              'X-Target-Environment': "mtnzambia",
               'X-Reference-Id': x_ref,
             }
         };
