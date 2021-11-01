@@ -78,17 +78,18 @@ export class PayService {
             const user_id = payload.user_id
             const api_creds = await this.fetchUserDetails(provider, user_id)
             console.log("api creds fetched", api_creds)
+            // amount: payload.amount,
             const request_payload: MtnRequestDto = {
                 ocp_apim_subscription_key: api_creds[0].primary_key,
                 user_id: api_creds[0].mtn_user_id,
                 user_key: api_creds[0].mtn_key,
-                amount: payload.amount,
-                currency: "EUR",
+                amount: "1",
+                currency: "ZMW ",
                 partyId: payload.msisdn,
                 payer_message: payload.reference,
                 payer_note: payload.reference,
                 externalId: payload.reference,
-                target_environment: "sandbox"
+                target_environment: "mtnzambia"
             }
             const mno_response = await this.mtnService.sendPaymentRequest(request_payload)
             console.log(mno_response)
