@@ -102,7 +102,7 @@ export class PayService {
                     "status": 200,
                     "message": "Success"
                 } 
-                this.updateTransaction(update_transaction_payload)
+                // this.updateTransaction(update_transaction_payload)
                 return {
                     response_code: 200,
                     message: "Transaction accepted for processing"
@@ -112,7 +112,7 @@ export class PayService {
                     "status": mno_response,
                     "message": "Failed"
                 } 
-                this.updateTransaction(update_transaction_payload)
+                // this.updateTransaction(update_transaction_payload)
                 return {
                     response_code: mno_response,
                     message: "Transaction Failed"
