@@ -44,7 +44,7 @@ export class MtnService {
     async transctionEnquiry(x_ref: string, access_token: string, sub_key: string){
       const config = {
         method: 'get',
-        url: 'https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay',
+        url: 'https://proxy.momoapi.mtn.com/collection/v1_0/requesttopay/'+x_ref,
         headers: {
           'Ocp-Apim-Subscription-Key': sub_key,
           'Authorization': 'Bearer '+ access_token,
@@ -58,7 +58,7 @@ export class MtnService {
       .toPromise()
       .then(res => {
           // console.log(res.headers)
-          console.log("response status ==> ",res.status)
+          console.log(" trasaction enquiry response status ==> ",res.status)
           const response = res.data
           return response
       })
