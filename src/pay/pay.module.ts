@@ -10,9 +10,10 @@ import { Mtn_Credentials } from 'src/entities/mtn_credentials';
 import { Zamtel_Credentials } from 'src/entities/zamtel_credentials';
 import { ZamtelService } from 'src/zamtel/zamtel.service';
 import { Transactions } from 'src/entities/transactions.entity';
+import { MessagingService } from 'src/messaging/messaging.service';
 
 @Module({
-  providers: [PayService, AirtelService, MtnService, ZamtelService],  
+  providers: [PayService, AirtelService, MtnService, ZamtelService, MessagingService],  
   controllers: [PayController],
   imports: [
     TypeOrmModule.forFeature([

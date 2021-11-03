@@ -11,6 +11,7 @@ import { Airtel_Credentials } from './entities/airtel_credentials';
 import { Zamtel_Credentials } from './entities/zamtel_credentials';
 import { Mtn_Credentials } from './entities/mtn_credentials';
 import { Transactions } from './entities/transactions.entity';
+import { MessagingModule } from './messaging/messaging.module';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { Transactions } from './entities/transactions.entity';
     AirtelModule, 
     MtnModule, 
     ZamtelModule, 
-    SendModule
+    SendModule, MessagingModule
   ],
   controllers: [AppController],
   providers: [AppService],
