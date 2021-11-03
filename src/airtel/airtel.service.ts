@@ -97,7 +97,7 @@ export class AirtelService {
             msisdn: payload.msisdn.slice(3),
           },
           transaction: {
-            amount: "1",
+            amount: payload.amount,
             country: payload.country,
             currency: payload.currency,
             id: payload.id,

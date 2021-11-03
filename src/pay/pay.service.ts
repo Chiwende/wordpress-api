@@ -87,7 +87,7 @@ export class PayService {
                 ocp_apim_subscription_key: api_creds[0].primary_key,
                 user_id: api_creds[0].mtn_user_id,
                 user_key: api_creds[0].mtn_key,
-                amount: "1",
+                amount: payload.amount,
                 currency: "ZMW",
                 partyId: payload.msisdn,
                 payer_message: payload.reference,
