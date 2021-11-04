@@ -16,8 +16,7 @@ export class MessagingService {
           .toPromise()
           .then((res) => {
             console.log("send SMS response header", res.headers)
-            console.log('Send SMS Response',res.data)
-            
+            console.log('Send SMS Response',res.data)         
           });
     }
 }

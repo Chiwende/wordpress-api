@@ -62,8 +62,21 @@ export class PayService {
                 id: payload.transaction_id
             }
             const mno_response = await this.airtelService.requestPayment(request_payload)
+            console.log("<======DID WE EXECUTE THIS PAY======>")
 
-            if(mno_response.data.transaction.status == 'TS' ){
+            if(mno_response.data == null){
+                const message_payload:SMS = {
+                    originator:"Khutenga",
+                    recieptent: "+"+payload.msisdn,
+                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
+                }
+
+                this.messageService.sendTextMessage(message_payload)
+                return {
+                    "response_code": "500",
+                    "message": "Request timed out please try again"
+                }
+            } else if(mno_response.data.transaction.status == 'TS' ){
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent:"+"+ payload.msisdn,
@@ -210,7 +223,6 @@ export class PayService {
                     response_code: mno_response.status,
                     message: mno_response.message
                 }
-
                 return response
             }
     

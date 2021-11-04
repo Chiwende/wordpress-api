@@ -28,7 +28,7 @@ export class AirtelService {
           });
     }
 
-    async transactionsEnquiry(payload: AirtelRequestDto): Promise<AirtelTransactionEnquiryResponseDto>{
+    async transactionsEnquiry(payload: AirtelRequestDto): Promise<any>{
       console.log("<===== check status =====>")
       const access_token = await this.generateToken(payload);
       console.log('access token ====> ' + access_token)
@@ -48,7 +48,6 @@ export class AirtelService {
       .toPromise()
       .then(
         (res) => {
-          // console.log(res)
           return res.data
         }
       ).catch(
@@ -68,16 +67,22 @@ export class AirtelService {
           .toPromise()
           .then(
             (res) => {
-              console.log('Transaction enquiry response ',res.data)
               return res.data
             }
           ).catch((error) => {
-            console.log('Error getting transaction details =====> ' + error)
-            return console.error();
-            
+            console.log('ERRRROR =====> ' + error)
+            console.error(error.headers)
+            this.result = {
+              "status": "500",
+              "Message": "Transaction Failed"
+            }
+            return this.result
           })
-        
-          this.request_status = this.result.data.transaction.status
+          if(this.result.data == null){
+            this.request_status = "TF"
+          } else {
+            this.request_status = this.result.data.transaction.status
+          }
       }
       console.log('data been returned' + request)
       return this.result
@@ -85,7 +90,7 @@ export class AirtelService {
 
 
 
-    async requestPayment(payload: AirtelRequestDto): Promise<AirtelTransactionEnquiryResponseDto> {
+    async requestPayment(payload: AirtelRequestDto): Promise<any> {
         const reference = "KH" +"" +Date.now()
         const access_token = await this.generateToken(payload);
         console.log(' airtel access token',access_token)
@@ -127,9 +132,9 @@ export class AirtelService {
             console.log(res.data);
             return res.data;
           });
-
+          
           const check_status = await this.transactionsEnquiry(payload)
-          console.log('check status response')
+          console.log('check status response', check_status)
 
           return check_status
       }
