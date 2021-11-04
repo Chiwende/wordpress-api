@@ -10,11 +10,12 @@ export class MessagingService {
 
     async sendTextMessage(payload: SMS){
         console.log("Send SMS PAyload", payload)
-        const url = '';
+        const url = 'http://137.184.139.186:8080/sms';
         return await this.httpService
           .post(url, payload)
           .toPromise()
           .then((res) => {
+            console.log("send SMS response header", res.headers)
             console.log('Send SMS Response',res.data)
             
           });

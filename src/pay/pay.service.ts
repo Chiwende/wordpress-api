@@ -66,7 +66,7 @@ export class PayService {
             if(mno_response.data.transaction.status == 'TS' ){
                 const message_payload:SMS = {
                     originator:"Khutenga",
-                    recieptent: payload.msisdn,
+                    recieptent:"+"+ payload.msisdn,
                     message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. Your parcel will soon recieve your parcel" 
                 }
 
@@ -78,7 +78,7 @@ export class PayService {
             } else if(mno_response.data.transaction.status == 'TF'){
                 const message_payload:SMS = {
                     originator:"Khutenga",
-                    recieptent: payload.msisdn,
+                    recieptent:"+"+ payload.msisdn,
                     message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
@@ -91,7 +91,7 @@ export class PayService {
             } else {
                 const message_payload:SMS = {
                     originator:"Khutenga",
-                    recieptent: payload.msisdn,
+                    recieptent: "+"+payload.msisdn,
                     message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
@@ -130,7 +130,7 @@ export class PayService {
                 // this.updateTransaction(update_transaction_payload)
                 const message_payload:SMS = {
                     originator:"Khutenga",
-                    recieptent: payload.msisdn,
+                    recieptent: "+"+payload.msisdn,
                     message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. Your parcel will soon recieve your parcel" 
                 }
 
@@ -142,7 +142,7 @@ export class PayService {
             } else {
                 const message_payload:SMS = {
                     originator:"Khutenga",
-                    recieptent: payload.msisdn,
+                    recieptent: "+"+payload.msisdn,
                     message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
@@ -178,7 +178,7 @@ export class PayService {
             if(mno_response.status == '0'){
                 const message_payload:SMS = {
                     originator:"Khutenga",
-                    recieptent: payload.msisdn,
+                    recieptent: "+"+payload.msisdn,
                     message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. Your parcel will soon recieve your parcel" 
                 }
 
