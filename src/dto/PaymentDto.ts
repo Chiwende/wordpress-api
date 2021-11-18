@@ -9,4 +9,7 @@ export class PaymentDto {
     description: string
     transaction_id: string
     status: number
+    shipping_address: string
+    shipping_city: string
+    vender_address: string
 }

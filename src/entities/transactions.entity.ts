@@ -33,7 +33,7 @@ export class Transactions {
   @Column()
   user_id: number
 
-  @Column({default: 401})
+  @Column({default: 300})
   status: number
 
   @Column({default: moment().format('YYYY-MM-DD')})

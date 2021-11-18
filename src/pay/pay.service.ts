@@ -77,18 +77,33 @@ export class PayService {
                     "message": "Request timed out please try again"
                 }
             } else if(mno_response.data.transaction.status == 'TS' ){
+                payload.status = 200
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent:"+"+ payload.msisdn,
                     message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
                 }
+                
+                const vendor_message: SMS = {
+                    originator: "Khutenga",
+                    recieptent:"",
+                    message: ""
+                }
+
+                const post_office_message: SMS = {
+                    originator: "Khutenga",
+                    recieptent: "+260955443674",
+                    message: payload.firstname + " " + payload.lastname + " has placed an order on Khutenga to be collected from " + payload.vender_address + " and delivered to " + payload.shipping_address + "," + payload.shipping_city
+                }
 
                 this.messageService.sendTextMessage(message_payload)
+                this.writeTransaction(payload)
                 return {
                     "response_code": mno_response.status.code,
                     "message": mno_response.status.message
                 }
             } else if(mno_response.data.transaction.status == 'TF'){
+                payload.status = 300
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent:"+"+ payload.msisdn,
@@ -96,12 +111,14 @@ export class PayService {
                 }
 
                 this.messageService.sendTextMessage(message_payload)
+                this.writeTransaction(payload)
                 return {
                     "response_code": mno_response.status.code,
                     "message": mno_response.status.message
                 }
                 
             } else {
+                payload.status = 300
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
@@ -109,6 +126,7 @@ export class PayService {
                 }
 
                 this.messageService.sendTextMessage(message_payload)
+                this.writeTransaction(payload)
                 return {
                     "response_code": "500",
                     "message": "Request timed out please try again"
@@ -136,6 +154,7 @@ export class PayService {
             const mno_response = await this.mtnService.sendPaymentRequest(request_payload)
             console.log(mno_response)
             if(mno_response == "SUCCESSFUL"){
+                payload.status = 200
                 const update_transaction_payload = {
                     "status": 200,
                     "message": "Success"
@@ -144,15 +163,17 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. Your parcel will soon recieve your parcel" 
+                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
+                this.writeTransaction(payload)
                 return {
                     response_code: 200,
                     message: "Transaction accepted for processing"
                 }
             } else {
+                payload.status = 300
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
@@ -160,6 +181,7 @@ export class PayService {
                 }
 
                 this.messageService.sendTextMessage(message_payload)
+                this.writeTransaction(payload)
                 const update_transaction_payload = {
                     "status": mno_response,
                     "message": "Failed"
@@ -189,10 +211,11 @@ export class PayService {
             console.log(mno_response)
             console.log('response code ??', mno_response.status)
             if(mno_response.status == '0'){
+                payload.status = 200
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. Your parcel will soon recieve your parcel" 
+                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
@@ -200,12 +223,14 @@ export class PayService {
                    "status": 200,
                    "message": mno_response.message
                } 
-               this.updateTransaction(update_transaction_payload)
+               
+               this.writeTransaction(payload)
                return {
                    response_code: "200",
                    message: mno_response.message
                }
             } else {
+                payload.status = 300
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: payload.msisdn,
@@ -218,7 +243,7 @@ export class PayService {
                     "status": 500,
                     "message": mno_response.message
                 } 
-                const update = this.updateTransaction(update_transaction_payload)
+                this.writeTransaction(payload)
                 const response = {
                     response_code: mno_response.status,
                     message: mno_response.message
