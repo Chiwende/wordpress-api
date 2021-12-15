@@ -68,7 +68,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
@@ -81,7 +81,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent:"+"+ payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
                 }
                 
                 const vendor_message: SMS = {
@@ -107,7 +107,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent:"+"+ payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
@@ -122,7 +122,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
@@ -163,7 +163,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
@@ -177,7 +177,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
@@ -215,7 +215,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: "+"+payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Your payment of K" + payload.amount + " was successful. You will soon recieve your ordered item" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
@@ -234,7 +234,7 @@ export class PayService {
                 const message_payload:SMS = {
                     originator:"Khutenga",
                     recieptent: payload.msisdn,
-                    message: "Dear " + payload.firstname + ", thank you for trusting Khutenga. Unfortunately your transaction could not be processed" 
+                    message: "Dear " + payload.firstname + ", thank you for shopping on Khutenga. Unfortunately your transaction could not be processed" 
                 }
 
                 this.messageService.sendTextMessage(message_payload)
