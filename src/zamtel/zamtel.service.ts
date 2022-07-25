@@ -1,46 +1,60 @@
 import { HttpService } from '@nestjs/axios';
-import {  Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { response } from 'express';
 import { ZamtelRequestDto } from 'src/dto/ZamtelRequestDto';
 import { ZamtelResponseDto } from 'src/dto/ZamtelResponseDto';
 
 @Injectable()
 export class ZamtelService {
-    constructor (
-        private readonly httpService: HttpService
-    ) {}
+  constructor(private readonly httpService: HttpService) {}
 
-    async collectionRequest(payload: ZamtelRequestDto):Promise<ZamtelResponseDto> {
-      // https://apps.zamtel.co.zm/ZampayRestProd
-        const url =
-          'https://apps.zamtel.co.zm/ZampayRestProd/Req?&ThirdPartyID=' +
-          payload.third_party_id +
-          '&Password=' +
-          payload.password +
-          '&Amount=' +
-          payload.amount +
-          '&Msisdn=' +
-          payload.msisdn +
-          '&Shortcode=' +
-          payload.shortCode +
-          '&ConversationId=' +
-          payload.conversationI_id;
-          console.log(url)
-        const response_data = await this.httpService
-          .get(url)
-          .toPromise()
-          .then((res) => {
-            console.log(res.data);
-            console.log(res.status)
-            const mno_response = {
-              "response_code": res.status,
-              "message": res.data.message,
-              "data": res.data
-            }
-            return res.data
-          });
+  async collectionRequest(
+    payload: ZamtelRequestDto,
+  ): Promise<ZamtelResponseDto> {
+    // https://apps.zamtel.co.zm/ZampayRestProd
+    // const url =
+    //   'https://apps.zamtel.co.zm/ZampayRestProd/Req?&ThirdPartyID=' +
+    //   payload.third_party_id +
+    //   '&Password=' +
+    //   payload.password +
+    //   '&Amount=' +
+    //   payload.amount +
+    //   '&Msisdn=' +
+    //   payload.msisdn +
+    //   '&Shortcode=' +
+    //   payload.shortCode +
+    //   '&ConversationId=' +
+    //   payload.conversationI_id;
+    //   console.log(url)
 
-          return response_data
-      }
-    
+    const url =
+      'https://apps.zamtel.co.zm/ZampayRestProd/Req?&ThirdPartyID=' +
+      'kuthenga_Caller' +
+      '&Password=' +
+      'fZ6jT9HmyrULMl6lHDjeOkYJHMuuajH2' +
+      '&Amount=' +
+      payload.amount +
+      '&Msisdn=' +
+      payload.msisdn +
+      '&Shortcode=' +
+      '87877' +
+      '&ConversationId=' +
+      payload.conversationI_id;
+    console.log(url);
+    const response_data = await this.httpService
+      .get(url)
+      .toPromise()
+      .then((res) => {
+        console.log(res.data);
+        console.log(res.status);
+        const mno_response = {
+          response_code: res.status,
+          message: res.data.message,
+          data: res.data,
+        };
+        return res.data;
+      });
+
+    return response_data;
+  }
 }

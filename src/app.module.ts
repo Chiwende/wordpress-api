@@ -35,7 +35,7 @@ import { MessagingModule } from './messaging/messaging.module';
     MtnModule,
     ZamtelModule,
     SendModule,
-    MessagingModule,
+    // MessagingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

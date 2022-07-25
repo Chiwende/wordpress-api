@@ -8,7 +8,7 @@ export class MessagingService {
 
   async sendTextMessage(payload: SMS) {
     console.log('Send SMS PAyload', payload);
-    const url = 'http://159.89.88.125:8081/sms';
+    const url = 'http://137.184.139.186:8080/sms';
     return await this.httpService
       .post(url, payload)
       .toPromise()
