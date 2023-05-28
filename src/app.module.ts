@@ -17,10 +17,10 @@ import { MessagingModule } from './messaging/messaging.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '162.243.175.157',
+      host: '178.62.85.78',
       port: 3306,
-      username: 'ghost',
-      password: 'GH0$7123',
+      username: 'root',
+      password: 'Pa55w0rd',
       database: 'wordpress_payment_gateway',
       entities: [
         Airtel_Credentials,
